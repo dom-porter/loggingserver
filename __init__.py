@@ -111,8 +111,7 @@ def main():
     formatter.converter = time.gmtime
     handler.setFormatter(formatter)
 
-    logging.basicConfig(format='%(asctime)s  %(name)-15s [%(levelname)s] %(message)s',
-                        handlers=[handler],
+    logging.basicConfig(handlers=[handler],
                         level=log_level)
 
     tcpserver = LogRecordSocketReceiver()
