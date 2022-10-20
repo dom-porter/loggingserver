@@ -19,6 +19,15 @@ else:
     app_config = config.DevConfig
 
 
+class CustomAdapter(logging.LoggerAdapter):
+    """
+    This example adapter expects the passed in dict-like object to have a
+    'connid' key, whose value in brackets is prepended to the log message.
+    """
+    def process(self, msg, kwargs):
+        return '[%s] %s' % (self.extra['connid'], msg), kwargs
+
+
 class LogRecordStreamHandler(socketserver.StreamRequestHandler):
     """Handler for a streaming logging request.
 
@@ -46,6 +55,11 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
             if hmac.compare_digest(data_digest, golden_digest):
                 # Create log entry
                 obj = self.unPickle(data)
+                obj["name"] = obj["name"] + f" {self.connection.getpeername()[0]}"
+                pathname = str(obj["pathname"])
+                if pathname.__contains__("apps"):
+                    pathname = pathname.partition("apps")
+                    obj["pathname"] = pathname[2]
                 record = logging.makeLogRecord(obj)
                 self.handleLogRecord(record)
             else:
@@ -63,6 +77,7 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
         else:
             name = record.name
         logger = logging.getLogger(name)
+        adapter = CustomAdapter(logger, {'connid': self.connection.getpeername()[0]})
         # N.B. EVERY record gets logged. This is because Logger.handle
         # is normally called AFTER logger-level filtering. If you want
         # to do filtering, do it at the client end to save wasting
@@ -107,7 +122,7 @@ def main():
     handler = logging.handlers.RotatingFileHandler(app_config.LOG_SVR_FILE,
                                                    maxBytes=200000,
                                                    backupCount=1)
-    formatter = logging.Formatter('%(asctime)s  %(name)-15s [%(levelname)s] %(message)s')
+    formatter = logging.Formatter('%(asctime)s %(pathname)s %(name)-15s [%(process)s] [%(levelname)s] %(message)s')
     formatter.converter = time.gmtime
     handler.setFormatter(formatter)
 
