@@ -57,9 +57,12 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
                 obj = self.unPickle(data)
                 obj["name"] = obj["name"] + f" {self.connection.getpeername()[0]}"
                 pathname = str(obj["pathname"])
-                if pathname.__contains__("apps"):
-                    pathname = pathname.partition("apps")
-                    obj["pathname"] = pathname[2]
+                if pathname.__contains__("apps/"):
+                    pathname = pathname.partition("apps/")
+                    pathname = pathname[2]
+                    pathname = pathname[0:pathname.find("/")]
+                    obj["pathname"] = pathname
+
                 record = logging.makeLogRecord(obj)
                 self.handleLogRecord(record)
             else:
