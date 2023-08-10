@@ -21,7 +21,7 @@ else:
 
 class CustomAdapter(logging.LoggerAdapter):
     """
-    This example adapter expects the passed in dict-like object to have a
+    This adapter expects the passed in dict-like object to have a
     'connid' key, whose value in brackets is prepended to the log message.
     """
     def process(self, msg, kwargs):
@@ -37,9 +37,7 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
 
     def handle(self):
         """
-        Handle multiple requests - each expected to be a 36-bytes length,
-        followed by the LogRecord in pickle format. Logs the record
-        according to whatever policy is configured locally.
+        Handle multiple requests
         """
         while True:
             header = self.connection.recv(36)
@@ -90,7 +88,7 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
 
 class LogRecordSocketReceiver(socketserver.ThreadingTCPServer):
     """
-    Simple TCP socket-based logging receiver suitable for testing.
+    Simple TCP socket-based logging receiver
     """
 
     allow_reuse_address = True
