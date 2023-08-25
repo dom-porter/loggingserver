@@ -1,4 +1,4 @@
-# Introduction
+# Description
 This script will run a centralised logging server which will bind to an IP address and port detailed in the .env configuration.
 
 The current version extends the standard Python logging library and will be familiar to any Python coder. 
@@ -26,7 +26,7 @@ Example config:
 ```
 [program:loggingserver]
 directory=/apps/loggingserver/appdata/
-command=/apps/loggingserver/venv/bin/python3 __init__.py
+command=/apps/loggingserver/venv/bin/python3 main.py
 autostart=true
 autorestart=true
 ```
@@ -49,9 +49,11 @@ sudo supervisorctl update
 3.10
 ```
 
-# Install libraries
+# Install
 
 ```
+rename .envtemplate to .env
+
 pip install -r requirements.txt
 ```
 

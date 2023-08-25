@@ -1,0 +1,5 @@
+LOG_SVR_DIGEST_KEY="secret"
+LOG_SVR_FILE="app_logger.log"
+LOG_SVR_IP="localhost"
+LOG_SVR_PORT="9020"
+LOG_SVR_ENV="development"
