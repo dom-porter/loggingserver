@@ -135,7 +135,6 @@ def main():
     svr_logger.info(f"-- Logging Server Version {VERSION} --")
     svr_logger.info(f"Detected environment: {app_config.LOG_SVR_ENV}")
     svr_logger.info(f"Binding to: {app_config.LOG_SVR_IP}:{app_config.LOG_SVR_PORT}")
-    print(app_config.LOG_SVR_DIGEST_KEY)
     if app_config.LOG_SVR_DEBUG:
         svr_logger.info(f"Debug logging: Enabled")
     else:
