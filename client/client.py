@@ -1,6 +1,6 @@
 import logging.handlers
 
-from custom_handler import SocketHandlerHMAC
+from handler import SocketHandlerHMAC
 
 rootLogger = logging.getLogger('')
 rootLogger.setLevel(logging.DEBUG)
