@@ -4,8 +4,6 @@ from custom_handler import SocketHandlerHMAC
 
 rootLogger = logging.getLogger('')
 rootLogger.setLevel(logging.DEBUG)
-# socketHandler = logging.handlers.SocketHandler('localhost',
-                    # logging.handlers.DEFAULT_TCP_LOGGING_PORT)
 
 socketHandler = SocketHandlerHMAC('localhost',
                     logging.handlers.DEFAULT_TCP_LOGGING_PORT)
