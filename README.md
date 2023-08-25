@@ -71,8 +71,8 @@ pip install -r requirements.txt
 
 # Example Client
 
-The example_client directory shows how to use the logging server from a python script.  The main thing to note if that library svr_logging needs to be imported for  it to work.
+The client directory shows how to use the logging server from a python script.  The main thing to note is that SocketHandlerHMAC needs to be imported for it to work.
 
 ```
-from svr_logging import SocketHandlerHMAC
+from handler import SocketHandlerHMAC
 ```
