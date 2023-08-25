@@ -24,6 +24,7 @@ class CustomAdapter(logging.LoggerAdapter):
     This adapter expects the passed in dict-like object to have a
     'connid' key, whose value in brackets is prepended to the log message.
     """
+
     def process(self, msg, kwargs):
         return '[%s] %s' % (self.extra['connid'], msg), kwargs
 
@@ -65,7 +66,8 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
                 self.handleLogRecord(record)
             else:
                 # Discard message
-                svr_logger.error(f"Connection from [{self.connection.getpeername()[0]}:{self.connection.getpeername()[1]}] - failed digest check and message discarded")
+                svr_logger.error(
+                    f"Connection from [{self.connection.getpeername()[0]}:{self.connection.getpeername()[1]}] - failed digest check and message discarded")
 
     def unPickle(self, data):
         return pickle.loads(data)
@@ -114,7 +116,6 @@ class LogRecordSocketReceiver(socketserver.ThreadingTCPServer):
 
 
 def main():
-
     if app_config.LOG_SVR_DEBUG:
         log_level = logging.DEBUG
     else:
